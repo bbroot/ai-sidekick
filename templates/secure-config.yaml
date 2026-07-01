@@ -1,0 +1,35 @@
+security:
+  sandbox:
+    enabled: true
+    mode: "strict"
+    disk_quota_mb: 500
+    timeout_seconds: 60
+
+  permissions:
+    filesystem:
+      read_whitelist:
+        - "${WORKSPACE}"
+        - "${MEMORY_STORE_PATH}"
+      write_whitelist:
+        - "${WORKSPACE}/temp"
+        - "${MEMORY_STORE_PATH}/backup"
+    network:
+      allowed_domains:
+        - "api.openclaw.ai"
+        - "api.github.com"
+        - "ima.qq.com"
+
+  audit:
+    enabled: true
+    log_level: "info"
+    log_retention_days: 90
+    alert_on_high_risk: true
+
+  secrets:
+    storage: "keychain"
+    rotation_days: 90
+
+  intrusion_detection:
+    enabled: true
+    scan_interval_minutes: 30
+    auto_block_on_suspicious: true
