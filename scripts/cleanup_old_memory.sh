@@ -12,6 +12,8 @@ WB_HOME="${HOME}/.workbuddy"
 WORKSPACE="${WORKBUDDY_WORKSPACE:-$(ls -dt "$HOME"/WorkBuddy/*/ 2>/dev/null | head -1)}"
 DAILY_MEMORY_DIR="${WORKBUDDY_DAILY_MEMORY_DIR:-${WORKSPACE%/}/.workbuddy/memory}"
 DAYS="${WORKBUDDY_LOG_RETENTION_DAYS:-90}"
+AUTO_YES=0; DRY_RUN=0
+for a in "$@"; do case "$a" in --yes) AUTO_YES=1;; --dry-run) DRY_RUN=1;; esac; done
 
 echo "🗑️  清理 $DAYS 天前的日志: $DAILY_MEMORY_DIR"
 
@@ -30,8 +32,10 @@ fi
 echo "将删除以下文件:"
 echo "$DELETED"
 echo ""
-read -p "确认删除？(y/N): " confirm
-if [ "$confirm" = "y" ]; then
+if [ "$AUTO_YES" = "1" ] || [ "$DRY_RUN" = "1" ]; then confirm="y"; else read -p "确认删除？(y/N): " confirm; fi
+if [ "$DRY_RUN" = "1" ]; then
+  echo "🔍 dry-run：仅列出，不删除"
+elif [ "$confirm" = "y" ]; then
   find "$DAILY_MEMORY_DIR" -name "*.md" -mtime +$DAYS -delete
   echo "✅ 已删除 $(echo "$DELETED" | wc -l | tr -d ' ') 个文件"
 else

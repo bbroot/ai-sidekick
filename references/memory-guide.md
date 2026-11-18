@@ -124,9 +124,8 @@ MEMORY_FILE="$PERSONAL_DIR/MEMORY.md"
 BACKUP_DIR="$HOME/.qclaw/backups"
 mkdir -p "$BACKUP_DIR"
 DATE=$(date +%Y%m%d_%H%M%S)
-tar czf "$BACKUP_DIR/memory_${DATE}.tar.gz" \
-  "$MEMORY_FILE" \
-  "$DAILY_MEMORY_DIR"
+# 推荐直接运行 scripts/backup_memory.sh（已含完整路径解析）
+bash ~/.workbuddy/skills/ai-sidekick/scripts/backup_memory.sh
 echo "备份完成: $BACKUP_DIR/memory_${DATE}.tar.gz"
 ls -lh "$BACKUP_DIR" | tail -5
 ```

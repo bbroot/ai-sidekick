@@ -28,24 +28,33 @@ if [ ! -f "$MEMORY_FILE" ]; then
   exit 1
 fi
 
-# 用 awk 重写段落，再用 mv 落盘（跨平台，避免 macOS 专属的 sed -i ''）
+# 追加语义：保留段落原有条目，仅在段末追加新行（同内容去重）。
+# 旧实现用 in_section{next} 会丢弃整段历史条目，造成不可逆数据丢失。
 TODAY=$(date +%Y-%m-%d)
 MEMORY_FILE="$MEMORY_FILE" SECTION="$SECTION" CONTENT="$CONTENT" TODAY="$TODAY" \
 awk '
   BEGIN {
-    mem = ENVIRON["MEMORY_FILE"]; sec = "## " ENVIRON["SECTION"]
-    line = "- " ENVIRON["CONTENT"] " (" ENVIRON["TODAY"] ")"
+    sec = "## " ENVIRON["SECTION"]
+    bare = ENVIRON["CONTENT"]
+    line = "- " bare " (" ENVIRON["TODAY"] ")"
   }
   $0 == sec {
-    print; print line; in_section = 1; inserted = 1; next
+    print; in_section = 1; inserted = 1; next
   }
-  /^## / && in_section { in_section = 0 }
-  in_section { next }
-  { print }
+  /^## / && in_section {
+    # 离开段落前，若尚未追加重试（去重：正文已含 bare 则跳过）
+    if (!appended) { print line; appended = 1 }
+    in_section = 0
+  }
+  {
+    print
+    if (in_section && index($0, bare) > 0) duplicate = 1
+  }
   END {
-    if (!inserted) { print ""; print sec; print line }
+    if (!inserted) { print ""; print sec; print line; appended = 1 }
+    else if (in_section && !appended && !duplicate) { print line }
   }
 ' "$MEMORY_FILE" > "${MEMORY_FILE}.tmp" && mv "${MEMORY_FILE}.tmp" "$MEMORY_FILE"
 
-echo "✅ 已更新段落: $SECTION"
+echo "✅ 已在段落末尾追加: $SECTION"
 echo "   记忆文件: $MEMORY_FILE"

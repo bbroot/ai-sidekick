@@ -127,17 +127,16 @@ USER.md 记录用户的偏好、习惯和项目上下文。每次主会话启动
 ### 3.4 记忆备份脚本
 
 ```bash
-# scripts/backup_memory.sh
-#!/bin/bash
-PERSONAL_DIR="$(ls -d "$HOME"/.workbuddy/user-*-personal 2>/dev/null | head -1)"
-MEMORY_FILE="$PERSONAL_DIR/MEMORY.md"
-BACKUP_DIR="$HOME/.qclaw/backups"
-mkdir -p "$BACKUP_DIR"
-DATE=$(date +%Y%m%d_%H%M%S)
-tar czf "$BACKUP_DIR/memory_${DATE}.tar.gz" \
-  "$WORKSPACE/MEMORY.md" \
-  "$WORKSPACE/memory/" 2>/dev/null
-echo "✅ 备份完成: $BACKUP_DIR/memory_${DATE}.tar.gz"
+# 推荐直接调用脚本（已含完整路径解析与兜底），不要复制下面这段示意代码
+bash ~/.workbuddy/skills/ai-sidekick/scripts/backup_memory.sh
+
+# 其等价逻辑（供理解）：
+# PERSONAL_DIR="$(ls -d "$HOME"/.workbuddy/user-*-personal 2>/dev/null | head -1)"
+# MEMORY_FILE="$PERSONAL_DIR/MEMORY.md"
+# DAILY_MEMORY_DIR="<workspace>/.workbuddy/memory"
+# BACKUP_DIR="$HOME/.workbuddy/backups"   # ← 已修正为 WorkBuddy 路径
+# DATE=$(date +%Y%m%d_%H%M%S)
+# tar czf "$BACKUP_DIR/memory_${DATE}.tar.gz" "$MEMORY_FILE" "$DAILY_MEMORY_DIR" 2>/dev/null
 ```
 
 ---

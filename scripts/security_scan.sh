@@ -53,7 +53,7 @@ fi
 echo "  [5/5] 检查凭证存储..."
 CREDS=$(grep -rE "api[_-]?key|password|secret|token" \
   --include="*.yaml" --include="*.json" --include="*.sh" \
-  --include="*.py" "$TARGET" 2>/dev/null | grep -v "^#")
+  --include="*.py" "$TARGET" 2>/dev/null | grep -vE "^[^:]*:[[:space:]]*#")
 if [ -n "$CREDS" ]; then
   echo "  ⚠️  发现凭证相关字段（确认是否为占位符）:"
   echo "$CREDS" | head -5
