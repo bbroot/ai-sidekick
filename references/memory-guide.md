@@ -58,7 +58,8 @@ MEMORY.md（长期）
 
 ### 位置
 
-workspace 根目录：`~/.qclaw/workspace-agent-37058ef3/MEMORY.md`
+WorkBuddy 用户级长期记忆：`~/.workbuddy/user-*-personal/MEMORY.md`
+每日日志（工作区短期记忆）：`<workspace>/.workbuddy/memory/YYYY-MM-DD.md`
 
 ### 何时更新
 
@@ -118,13 +119,14 @@ MEMORY.md **不应**越来越大。每次更新时：
 
 ```bash
 # scripts/backup_memory.sh
-WORKSPACE="$HOME/.qclaw/workspace-agent-37058ef3"
+PERSONAL_DIR="$(ls -d "$HOME"/.workbuddy/user-*-personal 2>/dev/null | head -1)"
+MEMORY_FILE="$PERSONAL_DIR/MEMORY.md"
 BACKUP_DIR="$HOME/.qclaw/backups"
 mkdir -p "$BACKUP_DIR"
 DATE=$(date +%Y%m%d_%H%M%S)
 tar czf "$BACKUP_DIR/memory_${DATE}.tar.gz" \
-  "$WORKSPACE/MEMORY.md" \
-  "$WORKSPACE/memory/"
+  "$MEMORY_FILE" \
+  "$DAILY_MEMORY_DIR"
 echo "备份完成: $BACKUP_DIR/memory_${DATE}.tar.gz"
 ls -lh "$BACKUP_DIR" | tail -5
 ```
@@ -136,7 +138,7 @@ ls -lh "$BACKUP_DIR" | tail -5
 每 90 天执行一次清理：
 ```bash
 # 删除 90 天前的日志（保留最近 90 天）
-find ~/.qclaw/workspace-agent-37058ef3/memory/ \
+find "$(ls -dt "$HOME"/WorkBuddy/*/ 2>/dev/null | head -1)/.workbuddy/memory" \
   -name "*.md" -mtime +90 -delete
 ```
 

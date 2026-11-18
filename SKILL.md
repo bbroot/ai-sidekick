@@ -1,5 +1,6 @@
 ---
 name: ai-sidekick
+version: 1.1.0
 description: |
   OpenClaw AI 员工（龙虾）全面调教技能包。覆盖人设配置（SOUL.md）、用户画像（USER.md）、
   记忆系统（Memory）、安全防护、技能管理、工作流串联、Token 优化等全生命周期管理。
@@ -128,7 +129,8 @@ USER.md 记录用户的偏好、习惯和项目上下文。每次主会话启动
 ```bash
 # scripts/backup_memory.sh
 #!/bin/bash
-WORKSPACE="$HOME/.qclaw/workspace-agent-37058ef3"
+PERSONAL_DIR="$(ls -d "$HOME"/.workbuddy/user-*-personal 2>/dev/null | head -1)"
+MEMORY_FILE="$PERSONAL_DIR/MEMORY.md"
 BACKUP_DIR="$HOME/.qclaw/backups"
 mkdir -p "$BACKUP_DIR"
 DATE=$(date +%Y%m%d_%H%M%S)
@@ -207,7 +209,7 @@ skillhub_install install_skill <skill-name>
 
 ```bash
 # 查找 skill 位置并告知用户
-ls ~/.qclaw/skills/
+ls ~/.workbuddy/skills/
 ```
 
 ### 5.4 Skill 版本管理

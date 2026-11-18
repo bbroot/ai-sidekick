@@ -6,6 +6,8 @@
 
 ---
 
+> 📖 **多平台安装**（WorkBuddy / 豆包工作 / Claude Code / Cursor / CodeBuddy）见 [INSTALL.md](INSTALL.md)
+
 [English](#english) · [中文](#中文)
 
 ---
@@ -33,26 +35,26 @@ clawhub install ai-sidekick
 
 # 或手动安装
 git clone https://github.com/bbroot/ai-sidekick.git
-mv ai-sidekick ~/.qclaw/skills/ai-sidekick
+mv ai-sidekick ~/.workbuddy/skills/ai-sidekick
 ```
 
 ### 基本配置
 
-1. 编辑 `~/.qclaw/workspace-agent-*/SOUL.md`，参考 `templates/soul-template.md`
-2. 编辑 `~/.qclaw/workspace-agent-*/USER.md`，填写你的基本信息
-3. 在 `~/.qclaw/workspace-agent-*/memory/` 下创建今日日志
+1. 编辑 `~/.workbuddy/user-*-personal/SOUL.md`，参考 `templates/soul-template.md`
+2. 编辑 `~/.workbuddy/user-*-personal/USER.md`，填写你的基本信息
+3. 在工作区 `<workspace>/.workbuddy/memory/` 下创建今日日志 `YYYY-MM-DD.md`
 
 ### 安全初始化（新技能安装前必做）
 
 ```bash
-cd ~/.qclaw/skills
+cd ~/.workbuddy/skills
 bash ai-sidekick/scripts/security_scan.sh ./目标技能名
 ```
 
 ### 记忆备份
 
 ```bash
-bash ~/.qclaw/skills/ai-sidekick/scripts/backup_memory.sh
+bash ~/.workbuddy/skills/ai-sidekick/scripts/backup_memory.sh
 ```
 
 ---
@@ -163,26 +165,26 @@ clawhub install ai-sidekick
 
 # Or manual install
 git clone https://github.com/bbroot/ai-sidekick.git
-mv ai-sidekick ~/.qclaw/skills/ai-sidekick
+mv ai-sidekick ~/.workbuddy/skills/ai-sidekick
 ```
 
 ### Basic Setup
 
-1. Edit `~/.qclaw/workspace-agent-*/SOUL.md` — use `templates/soul-template.md` as reference
-2. Edit `~/.qclaw/workspace-agent-*/USER.md` — fill in your profile
-3. Create today's log in `~/.qclaw/workspace-agent-*/memory/`
+1. Edit `~/.workbuddy/user-*-personal/SOUL.md` — use `templates/soul-template.md` as reference
+2. Edit `~/.workbuddy/user-*-personal/USER.md` — fill in your profile
+3. Create today's log in `<workspace>/.workbuddy/memory/YYYY-MM-DD.md`
 
 ### Security Scan (Before Installing Any Third-Party Skill)
 
 ```bash
-cd ~/.qclaw/skills
+cd ~/.workbuddy/skills
 bash ai-sidekick/scripts/security_scan.sh ./target-skill-name
 ```
 
 ### Backup Memory
 
 ```bash
-bash ~/.qclaw/skills/ai-sidekick/scripts/backup_memory.sh
+bash ~/.workbuddy/skills/ai-sidekick/scripts/backup_memory.sh
 ```
 
 ---

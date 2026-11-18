@@ -6,7 +6,7 @@ SOUL.md 定义 AI 的"灵魂"，是每次会话启动时加载的第一优先级
 
 ## 文件位置
 
-`~/.qclaw/workspace-agent-XXXXX/SOUL.md`
+`~/.workbuddy/user-*-personal/SOUL.md`（WorkBuddy 用户级身份文件）
 
 ---
 
